@@ -2,9 +2,7 @@
 
 ## 📌 Project Overview
 
-This project is a full-stack web application that implements **User Profile Administration with Role-Based Access Control (RBAC)** for an insurance platform.
-
-It allows users to manage their profiles while restricting administrative actions based on user roles.
+This project is a full-stack web application for managing user profiles in an insurance platform. It implements **Role-Based Access Control (RBAC)** along with **JWT-based authentication** to ensure secure access to system features.
 
 ---
 
@@ -14,7 +12,7 @@ It allows users to manage their profiles while restricting administrative action
 
 * View own profile
 * Edit own profile
-* Self account management
+* Self account management (update details)
 
 ### 🛠️ Admin Features
 
@@ -24,11 +22,50 @@ It allows users to manage their profiles while restricting administrative action
 * Assign and change roles
 * Activate / Suspend user accounts
 
-### 🔐 RBAC Enforcement
+---
 
-* Only **Admin** can access admin routes
-* Non-admin users see **"Access Denied"**
-* Role-based permissions enforced on frontend and backend
+## 🔐 Authentication (JWT)
+
+This project uses **JSON Web Tokens (JWT)** for authentication.
+
+* Users can register using `/auth/register`
+* Users can login using `/auth/login`
+* On successful login, a **JWT token** is generated
+* The token must be included in the request header:
+
+```
+Authorization: <token>
+```
+
+* Protected routes verify the token before allowing access
+
+---
+
+## 🔒 RBAC (Authorization)
+
+Role-based access control is enforced across the system.
+
+### Roles:
+
+* Customer
+* Agent
+* Underwriter
+* Claims Adjuster
+* Admin
+
+### Rules:
+
+* Only **Admin** can:
+
+  * Create users
+  * Edit users
+  * Assign roles
+  * Change account status
+
+* Non-admin users:
+
+  * Cannot access admin routes
+  * Receive **"Access Denied"**
 
 ---
 
@@ -45,39 +82,30 @@ It allows users to manage their profiles while restricting administrative action
 * Node.js
 * Express.js
 * MongoDB (Mongoose)
+* JSON Web Token (JWT)
+* bcrypt.js
 
 ---
 
 ## 📡 API Endpoints
 
-### Profile APIs
+### Authentication
 
-* `GET /profile/me` → Get logged-in user profile
+* `POST /auth/register` → Register new user
+* `POST /auth/login` → Login and receive JWT
+
+### Profile
+
+* `GET /profile/me` → Get current user profile
 * `PUT /profile/me` → Update profile
 
-### Admin APIs
+### Admin
 
 * `GET /admin/users` → Get all users
-* `POST /admin/users` → Create new user
+* `POST /admin/users` → Create user
 * `PUT /admin/users/:id` → Update user
 * `PUT /admin/users/:id/status` → Change user status
 * `PUT /admin/users/:id/role` → Assign role
-
----
-
-## 🔒 RBAC Rules
-
-* Only Admin can:
-
-  * Create users
-  * Update users
-  * Assign roles
-  * Change account status
-
-* Non-admin users:
-
-  * Cannot access admin pages
-  * Receive "Access Denied" message
 
 ---
 
@@ -85,7 +113,7 @@ It allows users to manage their profiles while restricting administrative action
 
 ### 🔹 Backend Setup
 
-```bash
+```
 cd rbac-backend
 npm install
 npx nodemon server.js
@@ -93,7 +121,7 @@ npx nodemon server.js
 
 ### 🔹 Frontend Setup
 
-```bash
+```
 cd rbac-frontend
 npm install
 npm start
@@ -105,9 +133,10 @@ npm start
 
 All required screenshots are included in the **/screenshots** folder:
 
+* Login (JWT Token)
+* Admin Users with Token
 * Profile Page
 * Edit Profile
-* Admin Users
 * Create User
 * Edit User
 * Role Assignment
@@ -129,18 +158,19 @@ README.md
 
 ## 👥 Team Members
 
-* Your Name
-* Member 2
-* Member 3
+* Komal
+* Dheerjmarathee
+* Muhammad Maaz
 
 ---
 
 ## ✅ Conclusion
 
-This project successfully demonstrates:
+This project demonstrates:
 
+* Secure authentication using JWT
+* Role-based authorization (RBAC)
 * Full user lifecycle management
-* Secure role-based access control
-* Clean frontend-backend integration
+* Integration between frontend and backend systems
 
 ---
